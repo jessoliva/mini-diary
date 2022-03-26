@@ -8,15 +8,12 @@ const uniqid = require('uniqid');
 const { createNewNote, validateNote, deleteById } = require('../../lib/notes');
 
 // import notes data
-const notes = require('../../db/db');
+let notes = require('../../db/db');
 
 // Get notes
 notesRouter.get('/notes', (req, res) => {
-
-    // the notes declared above
-    let results = notes;
     // sends data back to client as json
-    res.json(results);
+    res.json(notes);
 });
 
 // Post notes
@@ -39,17 +36,27 @@ notesRouter.post('/notes', (req, res) => {
 
 // Delete notes
 notesRouter.delete('/notes/:id', (req, res) => {
-    
-    // const noteId = req.params.id;
-    // let noteList = JSON.parse(fs.readFileSync("./db/db.json"));
-    // noteList = noteList.filter((x) => x.id !== noteId);
-    // fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
-    // res.json(noteList);
 
+    // DOES NOT WORK, sending as args to function
     deleteById(req.params.id, notes);
+    
+    // // DOES NOT WORK, creating a new variable
+    // // filter notes array to remove note with id = id
+    // const newNotes = notes.filter(note => note.id !== req.params.id);
 
-    res.status(200).send('Note deleted.');
+    // THIS WORKS, setting to same variable and having function here!!
+    notes = notes.filter(note => note.id !== req.params.id);
 
+    // save notes array to json file
+    fs.writeFileSync(
+        path.join(__dirname, '../../db/db.json'),
+        JSON.stringify(notes, null, 2)
+    );
+
+    res.json({
+        message: 'Note deleted.',
+        data: notes
+    })
 });
 // req = will contain information about the call to the server, the path, the query parameters, and maybe path parameters
 // res = will contain information that gets sent back to the client
