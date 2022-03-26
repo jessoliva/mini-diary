@@ -29,6 +29,20 @@ notesRouter.get('/notes', (req, res) => {
     res.json(results);
 });
 
+notesRouter.post('/notes', (req, res) => {
+    // set id based on what the next index of the array will be
+    req.body.id = uniqid();
+
+    if (!validateNote(req.body)) {
+        res.status(400).send('The note is not properly formatted.');
+    } 
+
+    else {
+        // if data is correct& function returns true then send that data to createNewNote
+        const note = createNewNote(req.body, notes);
+        res.json(note);
+    }
+});
 
 module.exports = notesRouter;
 
