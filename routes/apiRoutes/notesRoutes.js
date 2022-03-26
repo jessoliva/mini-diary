@@ -45,17 +45,17 @@ notesRouter.delete('/notes/:id', (req, res) => {
     // const newNotes = notes.filter(note => note.id !== req.params.id);
 
     // THIS WORKS, setting to same variable and having function here!!
-    const newNote = notes.filter(note => note.id !== req.params.id);
+    notes = notes.filter(note => note.id !== req.params.id);
 
     // save notes array to json file
     fs.writeFileSync(
         path.join(__dirname, '../../db/db.json'),
-        JSON.stringify(newNote, null, 2)
+        JSON.stringify(notes, null, 2)
     );
 
     res.json({
         message: 'Note deleted.',
-        data: newNote
+        data: notes
     })
 });
 // req = will contain information about the call to the server, the path, the query parameters, and maybe path parameters
