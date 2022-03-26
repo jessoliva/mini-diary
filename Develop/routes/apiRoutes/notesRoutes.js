@@ -11,3 +11,24 @@
 // THEN that note appears in the right-hand column
 // WHEN I click on the Write icon in the navigation at the top of the page
 // THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
+
+const notesRouter = require('express').Router();
+// give each note a unique id
+const uniqid = require('uniqid'); 
+
+const { createNewNote, validateNote } = require('../../lib/notes');
+
+// import notes data
+const { notes } = require('../../db/db');
+
+notesRouter.get('/notes', (req, res) => {
+
+    // the notes declared above
+    let results = notes;
+    // sends data back to client as json
+    res.json(results);
+});
+
+
+module.exports = notesRouter;
+
