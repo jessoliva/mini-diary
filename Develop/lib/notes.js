@@ -29,6 +29,27 @@ function validateNote(note) {
       return false;
     }
     return true;
-}
+};
 
-module.exports = { createNewNote, validateNote };
+function deleteById(id, notesArray) {
+
+    // check if a note with that id exists in the notesArray
+    const found = notesArray.find(note => note.id === id);
+
+    // if that note does not exist, return out of function
+    if (!found) {
+        return false;
+    }
+
+    const deleteArray = notesArray.filter(note => note.id !== id);
+
+    // save notes array to json file
+    fs.writeFileSync(
+        path.join(__dirname, '../db/db.json'),
+        JSON.stringify({ notes: deleteArray }, null, 2)
+    );
+
+    return true;
+};
+
+module.exports = { createNewNote, validateNote, deleteById };

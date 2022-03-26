@@ -12,15 +12,18 @@
 // WHEN I click on the Write icon in the navigation at the top of the page
 // THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
 
+const fs = require('fs');
+const path = require('path');
 const notesRouter = require('express').Router();
 // give each note a unique id
 const uniqid = require('uniqid'); 
 
-const { createNewNote, validateNote } = require('../../lib/notes');
+const { createNewNote, validateNote, deleteById } = require('../../lib/notes');
 
 // import notes data
 const { notes } = require('../../db/db');
 
+// Get notes
 notesRouter.get('/notes', (req, res) => {
 
     // the notes declared above
@@ -29,14 +32,17 @@ notesRouter.get('/notes', (req, res) => {
     res.json(results);
 });
 
+// Post notes
 notesRouter.post('/notes', (req, res) => {
+
     // set id based on what the next index of the array will be
     req.body.id = uniqid();
 
+    // check if the note data has correct format
     if (!validateNote(req.body)) {
+        // if data is incorrect, send error message to client
         res.status(400).send('The note is not properly formatted.');
     } 
-
     else {
         // if data is correct& function returns true then send that data to createNewNote
         const note = createNewNote(req.body, notes);
@@ -44,6 +50,21 @@ notesRouter.post('/notes', (req, res) => {
     }
 });
 
+// Delete notes
+notesRouter.delete('/notes/:id', (req, res) => {
+
+    const noteDeleted = deleteById(req.params.id, notes);
+
+    //if the function deleteById returns false
+    if (!noteDeleted) {
+        res.status(400).send('This note does not exist.');
+    }
+    else {
+        res.json(notes);
+    }
+});
+// req = will contain information about the call to the server, the path, the query parameters, and maybe path parameters
+// res = will contain information that gets sent back to the client
 
 module.exports = notesRouter;
 
