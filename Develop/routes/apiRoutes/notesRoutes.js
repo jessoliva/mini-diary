@@ -39,6 +39,12 @@ notesRouter.post('/notes', (req, res) => {
 
 // Delete notes
 notesRouter.delete('/notes/:id', (req, res) => {
+    
+    // const noteId = req.params.id;
+    // let noteList = JSON.parse(fs.readFileSync("./db/db.json"));
+    // noteList = noteList.filter((x) => x.id !== noteId);
+    // fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    // res.json(noteList);
 
     deleteById(req.params.id, notes);
 
