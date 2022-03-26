@@ -55,6 +55,7 @@ To use, run the following command:
 
     npm start
 
+![Walk-through](./assets/images/sample.gif)
 
 ## ✏️&nbsp; Contribution Guidelines
 
