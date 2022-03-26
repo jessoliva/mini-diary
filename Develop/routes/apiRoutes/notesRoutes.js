@@ -4,6 +4,7 @@ const notesRouter = require('express').Router();
 // give each note a unique id
 const uniqid = require('uniqid'); 
 
+// import functions
 const { createNewNote, validateNote, deleteById } = require('../../lib/notes');
 
 // import notes data
