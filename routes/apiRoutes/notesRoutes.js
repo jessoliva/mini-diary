@@ -37,8 +37,8 @@ notesRouter.post('/notes', (req, res) => {
 // Delete notes
 notesRouter.delete('/notes/:id', (req, res) => {
 
-    // DOES NOT WORK, sending as args to function
-    deleteById(req.params.id, notes);
+    // // DOES NOT WORK, sending as args to function
+    // deleteById(req.params.id, notes);
     
     // // DOES NOT WORK, creating a new variable
     // // filter notes array to remove note with id = id
