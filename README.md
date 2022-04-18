@@ -72,7 +72,7 @@ To use, run the following command:
 
 If you have any questions related to this project, or you just want to interact, you can reach me via GitHub or E-mail!
 
-> Github: [jess-oliva](https://github.com/jess)
+> Github: [jessoliva](https://github.com/jessoliva)
 
 > E-mail: [jessoliva.g@gmail.com](mailto:jess)
 
